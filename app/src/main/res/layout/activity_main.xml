@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.Demo_NumberPickerDOB.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/Theme.Demo_NumberPickerDOB.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/picker3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:paddingTop="20dp">
+
+        <com.shawnlin.numberpicker.NumberPicker
+            android:id="@+id/pickerDay1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/np_height"
+            android:background="#F1F3FA"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/pickerMonth1"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:np_dividerColor="#F1F3FA"
+            app:np_fadingEdgeEnabled="true"
+            app:np_formatter="%02d"
+            app:np_height="@dimen/np_height"
+            app:np_selectedTextColor="#12033A"
+            app:np_selectedTextSize="19sp"
+            app:np_textColor="#12033A"
+            app:np_textSize="13sp"
+            app:np_wheelItemCount="5"
+            app:np_width="64dp" />
+<!--        app:np_textColor="#DADADA"-->
+
+        <com.shawnlin.numberpicker.NumberPicker
+            android:id="@+id/pickerMonth1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/np_height"
+            android:background="#F1F3FA"
+            android:contentDescription="test_number_picker_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/pickerYear1"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@+id/pickerDay1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:np_dividerColor="#F1F3FA"
+            app:np_fadingEdgeEnabled="true"
+            app:np_formatter="%02d"
+            app:np_height="@dimen/np_height"
+            app:np_selectedTextColor="#12033A"
+            app:np_selectedTextSize="19sp"
+            app:np_textColor="#12033A"
+            app:np_textSize="13sp"
+            app:np_wheelItemCount="5"
+            app:np_width="64dp" />
+
+        <com.shawnlin.numberpicker.NumberPicker
+            android:id="@+id/pickerYear1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/np_height"
+            android:background="#F1F3FA"
+            android:contentDescription="test_number_picker_view"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@+id/pickerMonth1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:np_dividerColor="#F1F3FA"
+            app:np_fadingEdgeEnabled="true"
+            app:np_formatter="%02d"
+            app:np_height="@dimen/np_height"
+            app:np_selectedTextColor="#12033A"
+            app:np_selectedTextSize="19sp"
+            app:np_textColor="#12033A"
+            app:np_textSize="13sp"
+            app:np_wheelItemCount="5"
+            app:np_width="64dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="16dp"
+        app:srcCompat="@android:drawable/ic_dialog_email" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
