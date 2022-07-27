@@ -56,8 +56,7 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener {
 
             numberPickerMonth.apply {
                 this.setSelectedTypeface(Typeface.create(Typeface.SANS_SERIF, 1000, false))
-                this.maxValue = months.size
-                this.displayedValues = months
+                setAllMonthValues()
                 this.setOnValueChangedListener(this@MainActivity)
             }
 
@@ -67,6 +66,8 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener {
                 this.setOnValueChangedListener(this@MainActivity)
             }
         }
+
+        setDayAndMonthValues()
 
         binding.fab.setOnClickListener { view ->
             val day = numberPickerDay.value
@@ -82,10 +83,15 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener {
         }
     }
 
+    private fun setAllMonthValues() {
+        numberPickerMonth.maxValue = months.size
+        numberPickerMonth.displayedValues = months
+    }
+
     private fun setDayValues(day: Int, month: Int, year: Int) {
         val days = getDays(day, month, year)
-        binding.pickerDay1.maxValue = days!!.size
-        binding.pickerDay1.displayedValues = days
+        numberPickerDay.maxValue = days!!.size
+        numberPickerDay.displayedValues = days
     }
 
     private fun getYears(): Array<String> {
@@ -123,7 +129,12 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener {
                 )
 
                 if (oldVal != newVal) {
-                    setDayValues(binding.pickerDay1.value, newVal, binding.pickerYear1.value)
+                    if (numberPickerYear.displayedValues[numberPickerYear.value - 1] == years!![0]) {
+                        setDayAndMonthValues()
+                    } else {
+                        setDayValues(numberPickerDay.value, newVal, numberPickerYear.value)
+                        setAllMonthValues()
+                    }
                 }
             }
 
@@ -134,7 +145,12 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener {
                     "Picker = Year::: oldVal:${years!![oldVal - 1]}, newVal:${years!![newVal - 1]}"
                 )
                 if (oldVal != newVal) {
-                    setDayValues(binding.pickerDay1.value, binding.pickerMonth1.value, newVal)
+                    if (numberPickerYear.displayedValues[numberPickerYear.value - 1] == years!![0]) {
+                        setDayAndMonthValues()
+                    } else {
+                        setDayValues(numberPickerDay.value, numberPickerMonth.value, newVal)
+                        setAllMonthValues()
+                    }
                 }
             }
 
@@ -142,12 +158,49 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener {
                 // day
                 Log.e("TAG", "Picker = Day::: oldVal:${oldVal}, newVal:${newVal}")
                 if (oldVal != newVal) {
-//                    setDayValues(binding.pickerDay1.value, binding.pickerMonth1.value, newVal)
+//                    setDayValues(numberPickerDay.value, binding.pickerMonth1.value, newVal)
+                    if (numberPickerYear.displayedValues[numberPickerYear.value - 1] == years!![0]) {
+                        setDayAndMonthValues()
+                    } else {
+                        setDayValues(numberPickerDay.value, numberPickerMonth.value, newVal)
+                        setAllMonthValues()
+                    }
                 }
             }
         }
 
         isValidAge()
+    }
+
+    private fun setDayAndMonthValues() {
+        val arrayList: ArrayList<String> = arrayListOf()
+        val now = LocalDate.now()
+        val other = LocalDate.of(now.year, now.month, now.dayOfMonth)
+
+        val monthValue = other.monthValue
+
+        for (i in 0 until monthValue)
+            arrayList.add(months[i])
+
+        val months = arrayList.toTypedArray()
+
+        numberPickerMonth.maxValue = months.size
+        numberPickerMonth.displayedValues = months
+
+        arrayList.clear()
+
+        val days = if (numberPickerMonth.value == now.monthValue) {
+            for (i in 1..other.dayOfMonth) {
+                arrayList.add(String.format("%02d", i))
+            }
+            arrayList.toTypedArray()
+        } else {
+            getDays(day = 1, month = numberPickerMonth.value, year = numberPickerYear.value)
+        }
+
+
+        numberPickerDay.maxValue = days!!.size
+        numberPickerDay.displayedValues = days
     }
 
     private fun isValidAge(): Boolean {
